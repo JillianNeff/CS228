@@ -11,7 +11,8 @@ Leap.loop(controllerOptions, function(frame){
     clear();
     // let randomX = Math.floor(Math.random()*3) - 1;
     // let randomY = Math.floor(Math.random()*3) - 1;
-    circle(window.innerWidth/2 + x,window.innerHeight - y,50);
+    x = ((x - rawXMin)* (window.innerWidth)) / (rawXMax - rawXMin) //scaling x value
+    circle(x,window.innerHeight - y,50);
 }
 );
 function HandleFrame(frame){
