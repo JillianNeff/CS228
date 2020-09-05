@@ -14,12 +14,19 @@ Leap.loop(controllerOptions, function(frame){
 function HandleFrame(frame){
     if (frame.hands.length == 1){
         let hand = frame.hands[0];
-        let fingers = hand.fingers;
-        //console.log(fingers);
-        for(let f = 0; f < fingers.length; f++){
-            if(fingers[f].type == 1) {
-                console.log(fingers[f]);
-            }
-        }
+        HandleHand(hand);
+    }
+}
+
+function HandleHand(hand){
+    let fingers = hand.fingers;
+    for(let f = 0; f < fingers.length; f++){
+        HandleFinger(fingers[f]);
+    }
+}
+
+function HandleFinger(finger){
+    if(finger.type == 1) {
+        console.log(finger.tipPosition);
     }
 }
