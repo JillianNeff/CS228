@@ -7,13 +7,11 @@ let rawYMin = 1000;
 let rawXMax = -1000;
 let rawYMax = -1000;
 Leap.loop(controllerOptions, function(frame){
-        HandleFrame(frame);
         clear();
+        HandleFrame(frame);
         // let randomX = Math.floor(Math.random()*3) - 1;
         // let randomY = Math.floor(Math.random()*3) - 1;
-        x = ((x - rawXMin)* window.innerWidth) / (rawXMax - rawXMin) //scaling x value
-        y = ((y - rawYMin)* window.innerHeight) /(rawYMax-rawYMin) //scaling y value
-        circle(x,window.innerHeight - y,50);
+
     }
 );
 function HandleFrame(frame){
@@ -31,21 +29,15 @@ function HandleHand(hand){
 }
 
 function HandleFinger(finger){
-    if(finger.type == 1) {
-        HandleFingerTip(finger.tipPosition)
-        console.log(finger.tipPosition);
-    }
-}
-
-function HandleFingerTip(tipPosition){
-    x = tipPosition[0];
-    y = tipPosition[1];
-    z = tipPosition[2];
+    console.log(finger.tipPosition);
+    x = finger.tipPosition[0];
+    y = finger.tipPosition[1];
+    z = finger.tipPosition[2];
 
     if(x < rawXMin){
         rawXMin = x;
     }
-    if(x>rawXMax){
+    if(x > rawXMax){
         rawXMax = x;
     }
     if(y < rawYMin){
@@ -54,5 +46,10 @@ function HandleFingerTip(tipPosition){
     if(y > rawYMax){
         rawYMax = y;
     }
-    console.log(rawYMin, rawYMax, rawXMax, rawXMin);
+    //console.log(rawYMin, rawYMax, rawXMax, rawXMin);
+
+    x = ((x - rawXMin)* window.innerWidth) / (rawXMax - rawXMin); //scaling x value
+    y = ((y - rawYMin)* window.innerHeight) /(rawYMax-rawYMin); //scaling y value
+    console.log('Drawing circle');
+    circle(x,window.innerHeight - y,50);
 }
