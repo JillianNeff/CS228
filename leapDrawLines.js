@@ -48,11 +48,11 @@ function HandleFinger(finger) {
     }
 
     for (bone in finger.bones) {
-        HandleBone(finger.bones[bone]);
+        HandleBone(finger.bones[bone] , 2);
     }
 }
 
-function HandleBone(bone){
+function HandleBone(bone, weight){
     console.log(bone);
     xb = bone.prevJoint[0];
     yb = bone.prevJoint[1];
@@ -64,6 +64,7 @@ function HandleBone(bone){
 
 
     //circle(x,window.innerHeight - y,50);
+    strokeWeight(weight * (4-bone.type));
     line(xb,yb,xt,yt);
 
 }
