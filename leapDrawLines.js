@@ -23,30 +23,15 @@ function HandleFrame(frame){
 
 function HandleHand(hand){
     let fingers = hand.fingers;
-    for(let f = 0; f < fingers.length; f++){
-        HandleFinger(fingers[f]);
+    for(let b =3 ; b >= 0 ; b--){
+        for( let f = 0; f < 5; f++){
+            HandleBone(fingers[f].bones[b], 4-b);
+        }
     }
 }
 
 function HandleFinger(finger) {
     //console.log(finger);
-    x = finger.tipPosition[0];
-    y = finger.tipPosition[1];
-    z = finger.tipPosition[2];
-
-    if (x < rawXMin) {
-        rawXMin = x;
-    }
-    if (x > rawXMax) {
-        rawXMax = x;
-    }
-    if (y < rawYMin) {
-        rawYMin = y;
-    }
-    if (y > rawYMax) {
-        rawYMax = y;
-    }
-
     for (bone in finger.bones) {
         HandleBone(finger.bones[bone] , 4-finger.bones[bone].type );
     }
@@ -71,7 +56,20 @@ function HandleBone(bone, distance){
 }
 
 function TransformCoordinates(x,y) {
+    if (x < rawXMin) {
+        rawXMin = x;
+    }
+    if (x > rawXMax) {
+        rawXMax = x;
+    }
+    if (y < rawYMin) {
+        rawYMin = y;
+    }
+    if (y > rawYMax) {
+        rawYMax = y;
+    }
+
     x = ((x - rawXMin)* window.innerWidth) / (rawXMax - rawXMin); //scaling x value
-    y = window.innerHeight - ((y - rawYMin)* window.innerHeight) /(rawYMax-rawYMin); //scaling y value
+    y = window.innerHeight - (((y - rawYMin)* window.innerHeight) /(rawYMax-rawYMin)); //scaling y value
     return [x,y];
 }
