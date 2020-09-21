@@ -7,10 +7,10 @@ let rawYMin = 1000;
 let rawXMax = -1000;
 let rawYMax = -1000;
 Leap.loop(controllerOptions, function(frame){
-        clear();
-        HandleFrame(frame);
-        // let randomX = Math.floor(Math.random()*3) - 1;
-        // let randomY = Math.floor(Math.random()*3) - 1;
+    clear();
+    HandleFrame(frame);
+    // let randomX = Math.floor(Math.random()*3) - 1;
+    // let randomY = Math.floor(Math.random()*3) - 1;
 
     }
 );
