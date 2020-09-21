@@ -11,12 +11,9 @@ let currentNumHands = 0;
 
 Leap.loop(controllerOptions, function(frame){
     currentNumHands = frame.hands.length;
-    //clear();
-    //HandleFrame(frame);
-    // let randomX = Math.floor(Math.random()*3) - 1;
-    // let randomY = Math.floor(Math.random()*3) - 1;
-    console.log(previousNumHands, currentNumHands);
-        previousNumHands = currentNumHands;
+    clear();
+    HandleFrame(frame);
+    previousNumHands = currentNumHands;
     }
 );
 function HandleFrame(frame){
