@@ -52,7 +52,14 @@ function HandleBone(bone, distance){
 
     //circle(x,window.innerHeight - y,50);
     strokeWeight(3 * distance);
-    stroke(255 *(distance/6));
+    if(distance == 1)
+        stroke('rgb(12,38,12)')
+    else if (distance == 2)
+        stroke('rgb(25,76,25)')
+    else if(distance == 3)
+        stroke('rgb(38,114,38)')
+    else if(distance == 4)
+        stroke('rgb(63,191,63)')
     line(xb,yb,xt,yt);
 
 }
