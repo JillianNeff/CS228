@@ -6,12 +6,17 @@ let rawXMin = 1000;
 let rawYMin = 1000;
 let rawXMax = -1000;
 let rawYMax = -1000;
+let previousNumHands = 0;
+let currentNumHands = 0;
+
 Leap.loop(controllerOptions, function(frame){
-        clear();
-        HandleFrame(frame);
+        currentNumHands = frame.hands.length;
+        //clear();
+        //HandleFrame(frame);
         // let randomX = Math.floor(Math.random()*3) - 1;
         // let randomY = Math.floor(Math.random()*3) - 1;
-
+    console.log(previousNumHands, currentNumHands);
+        previousNumHands = currentNumHands;
     }
 );
 function HandleFrame(frame){
