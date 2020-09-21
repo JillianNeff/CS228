@@ -12,6 +12,7 @@ let currentNumHands = 0;
 Leap.loop(controllerOptions, function(frame){
     currentNumHands = frame.hands.length;
     clear();
+    RecordData();
     HandleFrame(frame);
     previousNumHands = currentNumHands;
     }
@@ -54,23 +55,23 @@ function HandleBone(bone, distance, numHands){
     strokeWeight(3 * distance);
     if(numHands > 1) {
         if(distance == 1)
-            stroke('rgb(95,6,6)')
+            stroke('rgb(95,6,6)');
         else if (distance == 2)
-            stroke('rgb(143,9,9)')
+            stroke('rgb(143,9,9)');
         else if(distance == 3)
-            stroke('rgb(190,13,13)')
+            stroke('rgb(190,13,13)');
         else if(distance == 4)
-            stroke('rgb(238,16,16)')
+            stroke('rgb(238,16,16)');
     }
     else {
         if (distance == 1)
-            stroke('rgb(12,38,12)')
+            stroke('rgb(12,38,12)');
         else if (distance == 2)
-            stroke('rgb(25,76,25)')
+            stroke('rgb(25,76,25)');
         else if (distance == 3)
-            stroke('rgb(38,114,38)')
+            stroke('rgb(38,114,38)');
         else if (distance == 4)
-            stroke('rgb(63,191,63)')
+            stroke('rgb(63,191,63)');
     }
     line(xb,yb,xt,yt);
 
@@ -93,4 +94,11 @@ function TransformCoordinates(x,y) {
     x = ((x - rawXMin)* window.innerWidth) / (rawXMax - rawXMin); //scaling x value
     y = window.innerHeight - (((y - rawYMin)* window.innerHeight) /(rawYMax-rawYMin)); //scaling y value
     return [x,y];
+}
+
+function RecordData() {
+    if(previousNumHands == 2 && currentNumHands == 1)
+        background(0);
+    else
+        background(255);
 }
