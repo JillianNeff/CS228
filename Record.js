@@ -17,17 +17,17 @@ Leap.loop(controllerOptions, function(frame){
     }
 );
 function HandleFrame(frame){
-    if (frame.hands.length == 1){
+    if (frame.hands.length >= 1){
         let hand = frame.hands[0];
-        HandleHand(hand);
+        HandleHand(hand,frame.hands.length);
     }
 }
 
-function HandleHand(hand){
+function HandleHand(hand, numHands){
     let fingers = hand.fingers;
     for(let b =3 ; b >= 0 ; b--){
         for( let f = 0; f < 5; f++){
-            HandleBone(fingers[f].bones[b], 4-b);
+            HandleBone(fingers[f].bones[b], 4-b, numHands);
         }
     }
 }
@@ -39,7 +39,7 @@ function HandleFinger(finger) {
     }
 }
 
-function HandleBone(bone, distance){
+function HandleBone(bone, distance, numHands){
     console.log(bone);
     xb = bone.prevJoint[0];
     yb = bone.prevJoint[1];
@@ -52,14 +52,26 @@ function HandleBone(bone, distance){
 
     //circle(x,window.innerHeight - y,50);
     strokeWeight(3 * distance);
-    if(distance == 1)
-        stroke('rgb(12,38,12)')
-    else if (distance == 2)
-        stroke('rgb(25,76,25)')
-    else if(distance == 3)
-        stroke('rgb(38,114,38)')
-    else if(distance == 4)
-        stroke('rgb(63,191,63)')
+    if(numHands > 1) {
+        if(distance == 1)
+            stroke('rgb(95,6,6)')
+        else if (distance == 2)
+            stroke('rgb(143,9,9)')
+        else if(distance == 3)
+            stroke('rgb(190,13,13)')
+        else if(distance == 4)
+            stroke('rgb(238,16,16)')
+    }
+    else {
+        if (distance == 1)
+            stroke('rgb(12,38,12)')
+        else if (distance == 2)
+            stroke('rgb(25,76,25)')
+        else if (distance == 3)
+            stroke('rgb(38,114,38)')
+        else if (distance == 4)
+            stroke('rgb(63,191,63)')
+    }
     line(xb,yb,xt,yt);
 
 }
