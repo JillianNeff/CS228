@@ -1,75 +1,26 @@
-let controllerOptions = {};
-let x = (window.innerWidth/2);
-let y = (window.innerHeight/2);
-let z = 0;
-let rawXMin = 1000;
-let rawYMin = 1000;
-let rawXMax = -1000;
-let rawYMax = -1000;
-Leap.loop(controllerOptions, function(frame){
-        clear();
-        HandleFrame(frame);
-        // let randomX = Math.floor(Math.random()*3) - 1;
-        // let randomY = Math.floor(Math.random()*3) - 1;
 
-    }
-);
-function HandleFrame(frame){
-    if (frame.hands.length == 1){
-        let hand = frame.hands[0];
-        HandleHand(hand);
-    }
-}
+oneFrameOfData = nj.array([[[  802.60434,  571.36331,    24.1332,  802.60434,  571.36331,    24.1332],
+    [  802.60434,  571.36331,    24.1332,  577.42697,  561.39694,   -1.93068],
+    [  577.42697,  561.39694,   -1.93068,   430.0504,  555.32362,    -21.054],
+    [   430.0504,  555.32362,    -21.054,  319.02976,   549.9945,   -31.9877]],
+    [[  847.42321,  497.61211,     23.977,  644.21307,   388.6738,   -24.5277],
+        [  644.21307,   388.6738,   -24.5277,  556.89703,  303.65854,   -51.6459],
+        [  556.89703,  303.65854,   -51.6459,  501.44565,  288.25085,    -70.696],
+        [  501.44565,  288.25085,    -70.696,  464.55025,  298.65478,   -84.3501]],
+    [[    905.806,  486.74446,    18.9481,  760.92409,  380.76427,   -30.8213],
+        [  760.92409,  380.76427,   -30.8213,  688.32579,   290.8724,   -64.0752],
+        [  688.32579,   290.8724,   -64.0752,  623.60928,  293.17233,   -87.0343],
+        [  623.60928,  293.17233,   -87.0343,  581.26794,  325.40132,   -99.5637]],
+    [[  966.17907,  486.50138,    13.7211,  885.99845,  391.37762,   -33.7951],
+        [  885.99845,  391.37762,   -33.7951,  817.74233,  313.23598,   -65.5245],
+        [  817.74233,  313.23598,   -65.5245,  749.76474,  316.60548,   -87.5185],
+        [  749.76474,  316.60548,   -87.5185,  701.81676,  347.43581,   -99.6658]],
+    [[ 1023.73708,  509.99062,    7.68408,  996.09152,  417.06956,   -36.9209],
+        [  996.09152,  417.06956,   -36.9209,  959.63852,  358.68865,   -63.3741],
+        [  959.63852,  358.68865,   -63.3741,  912.92644,  358.49793,   -79.0126],
+        [  912.92644,  358.49793,   -79.0126,  862.00987,  381.23548,   -90.4438]]]);
 
-function HandleHand(hand){
-    let fingers = hand.fingers;
-    for(let b =3 ; b >= 0 ; b--){
-        for( let f = 0; f < 5; f++){
-            HandleBone(fingers[f].bones[b], 4-b);
-        }
-    }
-}
-
-function HandleFinger(finger) {
-    //console.log(finger);
-    for (bone in finger.bones) {
-        HandleBone(finger.bones[bone] , 4-finger.bones[bone].type );
-    }
-}
-
-function HandleBone(bone, distance){
-    console.log(bone);
-    xb = bone.prevJoint[0];
-    yb = bone.prevJoint[1];
-    [xb,yb] = TransformCoordinates(xb,yb);
-
-    xt = bone.nextJoint[0];
-    yt = bone.nextJoint[1];
-    [xt,yt] = TransformCoordinates(xt,yt);
-
-
-    //circle(x,window.innerHeight - y,50);
-    strokeWeight(3 * distance);
-    stroke(255 *(distance/6));
-    line(xb,yb,xt,yt);
-
-}
-
-function TransformCoordinates(x,y) {
-    if (x < rawXMin) {
-        rawXMin = x;
-    }
-    if (x > rawXMax) {
-        rawXMax = x;
-    }
-    if (y < rawYMin) {
-        rawYMin = y;
-    }
-    if (y > rawYMax) {
-        rawYMax = y;
-    }
-
-    x = ((x - rawXMin)* window.innerWidth) / (rawXMax - rawXMin); //scaling x value
-    y = window.innerHeight - (((y - rawYMin)* window.innerHeight) /(rawYMax-rawYMin)); //scaling y value
-    return [x,y];
+function draw(){
+    clear();
+    console.log(oneFrameOfData);
 }
