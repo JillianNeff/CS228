@@ -8,14 +8,14 @@ let rawXMax = -1000;
 let rawYMax = -1000;
 let previousNumHands = 0;
 let currentNumHands = 0;
-var oneFrameOfData = nj.zeros([5]);
+var oneFrameOfData = nj.zeros([5,4]);
 
 Leap.loop(controllerOptions, function(frame){
-    // currentNumHands = frame.hands.length;
-    // clear();
-    // RecordData();
-    // HandleFrame(frame);
-    // previousNumHands = currentNumHands;
+    currentNumHands = frame.hands.length;
+    clear();
+    RecordData();
+    HandleFrame(frame);
+    previousNumHands = currentNumHands;
     console.log(oneFrameOfData.toString());
     }
 );
@@ -30,7 +30,7 @@ function HandleHand(hand){
     let fingers = hand.fingers;
     for(let b =3 ; b >= 0 ; b--){
         for( let f = 0; f < 5; f++){
-            HandleBone(fingers[f].bones[b], 4-b, f);
+            HandleBone(fingers[f].bones[b], b, f);
         }
     }
 }
@@ -42,8 +42,8 @@ function HandleHand(hand){
 //     }
 // }
 
-function HandleBone(bone, distance, fingerIndex){
-    console.log(bone);
+function HandleBone(bone, boneIndex, fingerIndex){
+    //console.log(bone);
     xb = bone.prevJoint[0];
     yb = bone.prevJoint[1];
     zb = bone.prevJoint[2];
@@ -55,9 +55,10 @@ function HandleBone(bone, distance, fingerIndex){
     [xt,yt] = TransformCoordinates(xt,yt);
 
     let sum = xb + xt + yb + yt + zb + zt;
-    oneFrameOfData.set(0, fingerIndex, sum);
+    oneFrameOfData.set(fingerIndex, boneIndex, sum);
 
     //circle(x,window.innerHeight - y,50);
+    let distance = 4-boneIndex;
     strokeWeight(3 * distance);
     if(currentNumHands > 1) {
         if(distance == 1)
