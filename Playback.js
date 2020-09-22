@@ -22,5 +22,15 @@ oneFrameOfData = nj.array([[[  802.60434,  571.36331,    24.1332,  802.60434,  5
 
 function draw(){
     clear();
-    console.log(oneFrameOfData);
+    for(let fingerIndex = 0; fingerIndex < oneFrameOfData.shape[0]; fingerIndex++){
+        for(let boneIndex=0; boneIndex < oneFrameOfData.shape[1]; boneIndex++){
+            let xStart = oneFrameOfData.get(fingerIndex, boneIndex, 0);
+            let yStart = oneFrameOfData.get(fingerIndex, boneIndex, 1);
+            let zStart = oneFrameOfData.get(fingerIndex, boneIndex, 2);
+            let xEnd = oneFrameOfData.get(fingerIndex, boneIndex, 3);
+            let yEnd = oneFrameOfData.get(fingerIndex, boneIndex, 4);
+            let zEnd = oneFrameOfData.get(fingerIndex, boneIndex, 5);
+            console.log(xStart, yStart, zStart, xEnd, yEnd, zEnd);
+        }
+    }
 }
