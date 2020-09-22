@@ -16,7 +16,6 @@ Leap.loop(controllerOptions, function(frame){
     RecordData();
     HandleFrame(frame);
     previousNumHands = currentNumHands;
-    console.log(oneFrameOfData.toString());
     }
 );
 function HandleFrame(frame){
@@ -55,12 +54,12 @@ function HandleBone(bone, boneIndex, fingerIndex){
     [xt,yt] = TransformCoordinates(xt,yt);
 
     let sum = xb + xt + yb + yt + zb + zt;
-    oneFrameOfData.set(fingerIndex, boneIndex, 1, xb);
-    oneFrameOfData.set(fingerIndex, boneIndex, 2, yb);
-    oneFrameOfData.set(fingerIndex, boneIndex, 3, zb);
-    oneFrameOfData.set(fingerIndex, boneIndex, 4, xt);
-    oneFrameOfData.set(fingerIndex, boneIndex, 5, yt);
-    oneFrameOfData.set(fingerIndex, boneIndex, 6, zt);
+    oneFrameOfData.set(fingerIndex, boneIndex, 0, xb);
+    oneFrameOfData.set(fingerIndex, boneIndex, 1, yb);
+    oneFrameOfData.set(fingerIndex, boneIndex, 2, zb);
+    oneFrameOfData.set(fingerIndex, boneIndex, 3, xt);
+    oneFrameOfData.set(fingerIndex, boneIndex, 4, yt);
+    oneFrameOfData.set(fingerIndex, boneIndex, 5, zt);
 
     //circle(x,window.innerHeight - y,50);
     let distance = 4-boneIndex;
@@ -109,8 +108,10 @@ function TransformCoordinates(x,y) {
 }
 
 function RecordData() {
-    if(previousNumHands == 2 && currentNumHands == 1)
+    if(previousNumHands == 2 && currentNumHands == 1) {
         background(0);
+        console.log(oneFrameOfData.toString());
+    }
     else
         background(255);
 }
