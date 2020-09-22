@@ -41,25 +41,39 @@ anotherFrameOfData = nj.array([[[561.03996, 853.658, 18.4081,561.03996, 853.658,
         [347.38354,428.59059,-68.9024,264.64001,411.95514,-74.7215],
         [264.64001,411.95514,-74.7215,190.21669,454.16644,-74.9917]]])
 
+let frameIndex = 0;
+let frameFlipped = 0;
+
 function draw(){
     clear();
+    if(frameIndex == 100) {
+        frameIndex = 0;
+        if (frameFlipped == 0)
+            frameFlipped = 1;
+        else
+            frameFlipped = 0;
+    }
+    console.log(frameFlipped);
     for(let fingerIndex = 0; fingerIndex < oneFrameOfData.shape[0]; fingerIndex++){
         for(let boneIndex=0; boneIndex < oneFrameOfData.shape[1]; boneIndex++){
-            let xStart = oneFrameOfData.get(fingerIndex, boneIndex, 0);
-            let yStart = oneFrameOfData.get(fingerIndex, boneIndex, 1);
-            let zStart = oneFrameOfData.get(fingerIndex, boneIndex, 2);
-            let xEnd = oneFrameOfData.get(fingerIndex, boneIndex, 3);
-            let yEnd = oneFrameOfData.get(fingerIndex, boneIndex, 4);
-            let zEnd = oneFrameOfData.get(fingerIndex, boneIndex, 5);
-            line(xStart, yStart, xEnd, yEnd);
-
-            xStart = anotherFrameOfData.get(fingerIndex, boneIndex, 0);
-            yStart = anotherFrameOfData.get(fingerIndex, boneIndex, 1);
-            zStart = anotherFrameOfData.get(fingerIndex, boneIndex, 2);
-            xEnd = anotherFrameOfData.get(fingerIndex, boneIndex, 3);
-            yEnd = anotherFrameOfData.get(fingerIndex, boneIndex, 4);
-            zEnd = anotherFrameOfData.get(fingerIndex, boneIndex, 5);
+            if(frameFlipped % 2 != 0) {
+                xStart = oneFrameOfData.get(fingerIndex, boneIndex, 0);
+                yStart = oneFrameOfData.get(fingerIndex, boneIndex, 1);
+                zStart = oneFrameOfData.get(fingerIndex, boneIndex, 2);
+                xEnd = oneFrameOfData.get(fingerIndex, boneIndex, 3);
+                yEnd = oneFrameOfData.get(fingerIndex, boneIndex, 4);
+                zEnd = oneFrameOfData.get(fingerIndex, boneIndex, 5);
+            }
+            else if(frameFlipped %2 == 0) {
+                xStart = anotherFrameOfData.get(fingerIndex, boneIndex, 0);
+                yStart = anotherFrameOfData.get(fingerIndex, boneIndex, 1);
+                zStart = anotherFrameOfData.get(fingerIndex, boneIndex, 2);
+                xEnd = anotherFrameOfData.get(fingerIndex, boneIndex, 3);
+                yEnd = anotherFrameOfData.get(fingerIndex, boneIndex, 4);
+                zEnd = anotherFrameOfData.get(fingerIndex, boneIndex, 5);
+            }
             line(xStart, yStart, xEnd, yEnd);
         }
     }
+    frameIndex++;
 }
