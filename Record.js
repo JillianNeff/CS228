@@ -8,7 +8,7 @@ let rawXMax = -1000;
 let rawYMax = -1000;
 let previousNumHands = 0;
 let currentNumHands = 0;
-var oneFrameOfData = nj.zeros([5,4]);
+var oneFrameOfData = nj.zeros([5,4,6]);
 
 Leap.loop(controllerOptions, function(frame){
     currentNumHands = frame.hands.length;
@@ -55,7 +55,12 @@ function HandleBone(bone, boneIndex, fingerIndex){
     [xt,yt] = TransformCoordinates(xt,yt);
 
     let sum = xb + xt + yb + yt + zb + zt;
-    oneFrameOfData.set(fingerIndex, boneIndex, sum);
+    oneFrameOfData.set(fingerIndex, boneIndex, 1, xb);
+    oneFrameOfData.set(fingerIndex, boneIndex, 2, yb);
+    oneFrameOfData.set(fingerIndex, boneIndex, 3, zb);
+    oneFrameOfData.set(fingerIndex, boneIndex, 4, xt);
+    oneFrameOfData.set(fingerIndex, boneIndex, 5, yt);
+    oneFrameOfData.set(fingerIndex, boneIndex, 6, zt);
 
     //circle(x,window.innerHeight - y,50);
     let distance = 4-boneIndex;
