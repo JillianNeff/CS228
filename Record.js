@@ -8,13 +8,15 @@ let rawXMax = -1000;
 let rawYMax = -1000;
 let previousNumHands = 0;
 let currentNumHands = 0;
+var oneFrameOfData = nj.zeros([5]);
 
 Leap.loop(controllerOptions, function(frame){
-    currentNumHands = frame.hands.length;
-    clear();
-    RecordData();
-    HandleFrame(frame);
-    previousNumHands = currentNumHands;
+    // currentNumHands = frame.hands.length;
+    // clear();
+    // RecordData();
+    // HandleFrame(frame);
+    // previousNumHands = currentNumHands;
+    console.log(oneFrameOfData.toString());
     }
 );
 function HandleFrame(frame){
@@ -24,36 +26,40 @@ function HandleFrame(frame){
     }
 }
 
-function HandleHand(hand, numHands){
+function HandleHand(hand){
     let fingers = hand.fingers;
     for(let b =3 ; b >= 0 ; b--){
         for( let f = 0; f < 5; f++){
-            HandleBone(fingers[f].bones[b], 4-b, numHands);
+            HandleBone(fingers[f].bones[b], 4-b, f);
         }
     }
 }
 
-function HandleFinger(finger) {
-    //console.log(finger);
-    for (bone in finger.bones) {
-        HandleBone(finger.bones[bone] , 4-finger.bones[bone].type );
-    }
-}
+// function HandleFinger(finger) {
+//     //console.log(finger);
+//     for (bone in finger.bones) {
+//         HandleBone(finger.bones[bone] , 4-finger.bones[bone].type);
+//     }
+// }
 
-function HandleBone(bone, distance, numHands){
+function HandleBone(bone, distance, fingerIndex){
     console.log(bone);
     xb = bone.prevJoint[0];
     yb = bone.prevJoint[1];
+    zb = bone.prevJoint[2];
     [xb,yb] = TransformCoordinates(xb,yb);
 
     xt = bone.nextJoint[0];
     yt = bone.nextJoint[1];
+    zt = bone.nextJoint[2];
     [xt,yt] = TransformCoordinates(xt,yt);
 
+    let sum = xb + xt + yb + yt + zb + zt;
+    oneFrameOfData.set(0, fingerIndex, sum);
 
     //circle(x,window.innerHeight - y,50);
     strokeWeight(3 * distance);
-    if(numHands > 1) {
+    if(currentNumHands > 1) {
         if(distance == 1)
             stroke('rgb(95,6,6)');
         else if (distance == 2)
