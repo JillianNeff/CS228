@@ -52,6 +52,14 @@ function draw(){
             let yEnd = oneFrameOfData.get(fingerIndex, boneIndex, 4);
             let zEnd = oneFrameOfData.get(fingerIndex, boneIndex, 5);
             line(xStart, yStart, xEnd, yEnd);
+
+            xStart = anotherFrameOfData.get(fingerIndex, boneIndex, 0);
+            yStart = anotherFrameOfData.get(fingerIndex, boneIndex, 1);
+            zStart = anotherFrameOfData.get(fingerIndex, boneIndex, 2);
+            xEnd = anotherFrameOfData.get(fingerIndex, boneIndex, 3);
+            yEnd = anotherFrameOfData.get(fingerIndex, boneIndex, 4);
+            zEnd = anotherFrameOfData.get(fingerIndex, boneIndex, 5);
+            line(xStart, yStart, xEnd, yEnd);
         }
     }
 }
