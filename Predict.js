@@ -1,4 +1,5 @@
 let trainingCompleted = false;
+const knnClassifier = ml5.KNNClassifier();
 
 let irisData = nj.array([
     [5.1, 3.5, 1.4, 0.2, 0], [4.9, 3, 1.4, 0.2, 0], [4.7, 3.2, 1.3, 0.2, 0], [4.6, 3.1, 1.5, 0.2, 0],
@@ -52,9 +53,10 @@ function draw(){
 
 function Train(){
     for( let r = 0; r < numSamples; r+= 2){
-        let currentFeatures = irisData.pick(r).slice([0,numFeatures])
-        console.log(r);
-        console.log(currentFeatures.toString());
+        let currentFeatures = irisData.pick(r).slice([0,numFeatures]);
+        let currentLabel = irisData.pick(r).get(numFeatures);
+        let featureList = currentFeatures.toList();
+        knnClassifier.addExample(featureList, currentLabel);
     }
     trainingCompleted = true;
 }
