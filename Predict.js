@@ -52,8 +52,9 @@ function draw(){
 
 function Train(){
     for( let r = 0; r < numSamples; r+= 2){
+        let currentFeatures = irisData.pick(r).slice([0,numFeatures])
         console.log(r);
-        console.log(irisData.pick(r).toString());
+        console.log(currentFeatures.toString());
     }
     trainingCompleted = true;
 }
