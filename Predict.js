@@ -45,17 +45,18 @@ let numFeatures = irisData.shape[1] - 1
 
 function draw(){
     clear();
-    console.log(numFeatures);
     if(!trainingCompleted)
         Train();
-    Test();
+    // Test();
 }
 
 function Train(){
-    console.log("I am being trained");
+    for( let r = 0; r < numSamples; r+= 2){
+        console.log(r);
+        console.log(irisData.pick(r).toString());
+    }
     trainingCompleted = true;
 }
 
 function Test(){
-    console.log("I am being tested");
 }
