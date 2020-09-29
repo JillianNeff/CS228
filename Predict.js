@@ -70,5 +70,9 @@ function Test(){
 }
 
 function GotResults(err, result){
-    console.log(testingSampleIndex, result);
+    console.log(testingSampleIndex, parseInt(result.label));
+    testingSampleIndex += 2;
+    if(testingSampleIndex > numSamples){
+        testingSampleIndex = 1;
+    }
 }
