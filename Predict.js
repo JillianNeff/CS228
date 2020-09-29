@@ -44,6 +44,7 @@ let irisData = nj.array([
 
 let numSamples = irisData.shape[0]
 let numFeatures = irisData.shape[1] - 1
+let predictedClassLabels = nj.zeros([numSamples]);
 
 function draw(){
     clear();
@@ -55,7 +56,7 @@ function draw(){
 
 function Train(){
     for( let r = 0; r < numSamples; r+= 2){
-        let currentFeatures = irisData.pick(r).slice([0,2]);
+        let currentFeatures = irisData.pick(r).slice([0,numFeatures]);
         let currentLabel = irisData.pick(r).get(numFeatures);
         let featureList = currentFeatures.tolist();
         knnClassifier.addExample(featureList, currentLabel);
@@ -64,7 +65,7 @@ function Train(){
 }
 
 function Test(){
-    let currentFeatures = irisData.pick(testingSampleIndex).slice([0,2]);
+    let currentFeatures = irisData.pick(testingSampleIndex).slice([0,numFeatures]);
     let currentLabel = irisData.pick(testingSampleIndex).get(numFeatures);
     //console.log(currentFeatures.toString(), currentLabel)
     let predictedLabel = knnClassifier.classify(currentFeatures.tolist(), GotResults);
@@ -72,6 +73,7 @@ function Test(){
 
 function GotResults(err, result){
     //console.log(testingSampleIndex, parseInt(result.label));
+    predictedClassLabels.set(testingSampleIndex, parseInt(result.label));
     testingSampleIndex += 2;
     if(testingSampleIndex > numSamples){
         testingSampleIndex = 1;
@@ -83,6 +85,7 @@ function DrawCircles(){
         let x  = irisData.pick(s).get(0);
         let y = irisData.pick(s).get(1);
         let c = irisData.pick(s).get(4);
+
         if(c == 0)
             fill("rgb(255,0,0)");
         else if (c == 1)
@@ -90,7 +93,18 @@ function DrawCircles(){
         else
             fill("rgb(0,0,255)");
 
+        if(s%2 == 0 )
+            stroke(0);
+        else if (predictedClassLabels.get(s) == 0)
+            stroke("rgb(255,0,0)");
+        else if (predictedClassLabels.get(s) == 1)
+            stroke("rgb(0,255,0)");
+        else
+            stroke("rgb(0,0,255)");
+
+
         //console.log(s,x,y)
+        console.log(predictedClassLabels)
         circle(x*130,y*130,12);
     }
 
