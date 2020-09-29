@@ -50,11 +50,12 @@ function draw(){
     if(!trainingCompleted)
         Train();
     Test();
+    DrawCircles();
 }
 
 function Train(){
     for( let r = 0; r < numSamples; r+= 2){
-        let currentFeatures = irisData.pick(r).slice([0,numFeatures]);
+        let currentFeatures = irisData.pick(r).slice([0,2]);
         let currentLabel = irisData.pick(r).get(numFeatures);
         let featureList = currentFeatures.tolist();
         knnClassifier.addExample(featureList, currentLabel);
@@ -63,16 +64,35 @@ function Train(){
 }
 
 function Test(){
-    let currentFeatures = irisData.pick(testingSampleIndex).slice([0,numFeatures]);
+    let currentFeatures = irisData.pick(testingSampleIndex).slice([0,2]);
     let currentLabel = irisData.pick(testingSampleIndex).get(numFeatures);
     //console.log(currentFeatures.toString(), currentLabel)
     let predictedLabel = knnClassifier.classify(currentFeatures.tolist(), GotResults);
 }
 
 function GotResults(err, result){
-    console.log(testingSampleIndex, parseInt(result.label));
+    //console.log(testingSampleIndex, parseInt(result.label));
     testingSampleIndex += 2;
     if(testingSampleIndex > numSamples){
         testingSampleIndex = 1;
     }
+}
+
+function DrawCircles(){
+    for(let s = 0; s< numSamples; s++){
+        let x  = irisData.pick(s).get(0);
+        let y = irisData.pick(s).get(1);
+        let c = irisData.pick(s).get(4);
+        if(c == 0)
+            fill("rgb(255,0,0)");
+        else if (c == 1)
+            fill("rgb(0,255,0)");
+        else
+            fill("rgb(0,0,255)");
+
+        //console.log(s,x,y)
+        circle(x*130,y*130,12);
+    }
+
+
 }
