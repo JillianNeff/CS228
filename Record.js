@@ -1,3 +1,4 @@
+nj.config.printThreshold = 1000;
 let controllerOptions = {};
 let x = (window.innerWidth/2);
 let y = (window.innerHeight/2);
@@ -70,7 +71,7 @@ function HandleBone(bone, boneIndex, fingerIndex, InteractionBox){
 
     //circle(x,window.innerHeight - y,50);
     let distance = 4-boneIndex;
-    strokeWeight(3 * distance);
+    strokeWeight(5 * distance);
     if(currentNumHands > 1) {
         if(distance == 1)
             stroke('rgb(95,6,6)');
@@ -97,16 +98,13 @@ function HandleBone(bone, boneIndex, fingerIndex, InteractionBox){
 
 
 function RecordData() {
-    if(currentNumHands == 2) {
-        console.log(currentSample);
+    if(currentNumHands == 2)
         currentSample++;
-    }
-    if(currentSample == numSamples){
+    if(currentSample == numSamples)
         currentSample = 0;
-    }
     if(previousNumHands == 2 && currentNumHands == 1) {
         background(0);
-        //console.log(framesOfData.pick(null,null,null,1).toString());
+        console.log(framesOfData.toString());
     }
     else
         background(255);
