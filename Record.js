@@ -40,22 +40,16 @@ function HandleHand(hand, numHands, InteractionBox){
 
 function HandleBone(bone, boneIndex, fingerIndex, InteractionBox){
     //console.log(bone);
-    xb = bone.prevJoint[0];
-    yb = bone.prevJoint[1];
-    zb = bone.prevJoint[2];
     let normalizedPrevJoint = InteractionBox.normalizePoint(bone.prevJoint, true);
-    let canvasPrevX = window.innerWidth * normalizedPrevJoint[0];
-    let canvasPrevY = window.innerHeight * (1 - normalizedPrevJoint[1]);
-    console.log(canvasPrevX, canvasPrevY);
-    //console.log(window.innerWidth, window.innerHeight);
+    xb = normalizedPrevJoint[0];
+    yb = normalizedPrevJoint[1];
+    zb = normalizedPrevJoint[2];
 
-    xt = bone.nextJoint[0];
-    yt = bone.nextJoint[1];
-    zt = bone.nextJoint[2];
     let normalizedNextJoint = InteractionBox.normalizePoint(bone.nextJoint, true);
-    let canvasNextX = window.innerWidth * normalizedNextJoint[0];
-    let canvasNextY = window.innerHeight * (1- normalizedNextJoint[1]);
-    console.log(canvasNextX, canvasNextY);
+
+    xt = normalizedNextJoint[0];
+    yt = normalizedNextJoint[1];
+    zt = normalizedNextJoint[2];
 
     let sum = xb + xt + yb + yt + zb + zt;
     oneFrameOfData.set(fingerIndex, boneIndex, 0, xb);
@@ -64,6 +58,11 @@ function HandleBone(bone, boneIndex, fingerIndex, InteractionBox){
     oneFrameOfData.set(fingerIndex, boneIndex, 3, xt);
     oneFrameOfData.set(fingerIndex, boneIndex, 4, yt);
     oneFrameOfData.set(fingerIndex, boneIndex, 5, zt);
+
+    let canvasPrevX = window.innerWidth * normalizedPrevJoint[0];
+    let canvasPrevY = window.innerHeight * (1 - normalizedPrevJoint[1]);
+    let canvasNextX = window.innerWidth * normalizedNextJoint[0];
+    let canvasNextY = window.innerHeight * (1- normalizedNextJoint[1]);
 
     //circle(x,window.innerHeight - y,50);
     let distance = 4-boneIndex;
@@ -88,7 +87,7 @@ function HandleBone(bone, boneIndex, fingerIndex, InteractionBox){
         else if (distance == 4)
             stroke('rgb(63,191,63)');
     }
-    line(xb,yb,xt,yt);
+    line(canvasPrevX,canvasPrevY,canvasNextX,canvasNextY);
 
 }
 
