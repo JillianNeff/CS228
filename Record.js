@@ -4,7 +4,11 @@ let y = (window.innerHeight/2);
 let z = 0;
 let previousNumHands = 0;
 let currentNumHands = 0;
-var oneFrameOfData = nj.zeros([5,4,6]);
+let numSamples = 2;
+let currentSample = 0;
+let framesOfData = nj.zeros([5,4,6,numSamples]);
+
+
 
 Leap.loop(controllerOptions, function(frame){
     currentNumHands = frame.hands.length;
@@ -52,12 +56,12 @@ function HandleBone(bone, boneIndex, fingerIndex, InteractionBox){
     zt = normalizedNextJoint[2];
 
     let sum = xb + xt + yb + yt + zb + zt;
-    oneFrameOfData.set(fingerIndex, boneIndex, 0, xb);
-    oneFrameOfData.set(fingerIndex, boneIndex, 1, yb);
-    oneFrameOfData.set(fingerIndex, boneIndex, 2, zb);
-    oneFrameOfData.set(fingerIndex, boneIndex, 3, xt);
-    oneFrameOfData.set(fingerIndex, boneIndex, 4, yt);
-    oneFrameOfData.set(fingerIndex, boneIndex, 5, zt);
+    framesOfData.set(fingerIndex, boneIndex, 0, currentSample, xb);
+    framesOfData.set(fingerIndex, boneIndex, 1, currentSample, yb);
+    framesOfData.set(fingerIndex, boneIndex, 2, currentSample, zb);
+    framesOfData.set(fingerIndex, boneIndex, 3, currentSample, xt);
+    framesOfData.set(fingerIndex, boneIndex, 4, currentSample, yt);
+    framesOfData.set(fingerIndex, boneIndex, 5, currentSample, zt);
 
     let canvasPrevX = window.innerWidth * normalizedPrevJoint[0];
     let canvasPrevY = window.innerHeight * (1 - normalizedPrevJoint[1]);
@@ -93,9 +97,16 @@ function HandleBone(bone, boneIndex, fingerIndex, InteractionBox){
 
 
 function RecordData() {
+    if(currentNumHands == 2) {
+        console.log(currentSample);
+        currentSample++;
+    }
+    if(currentSample == numSamples){
+        currentSample = 0;
+    }
     if(previousNumHands == 2 && currentNumHands == 1) {
         background(0);
-        console.log(oneFrameOfData.toString());
+        //console.log(framesOfData.pick(null,null,null,1).toString());
     }
     else
         background(255);
