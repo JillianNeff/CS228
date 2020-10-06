@@ -5,7 +5,7 @@ let y = (window.innerHeight/2);
 let z = 0;
 let previousNumHands = 0;
 let currentNumHands = 0;
-let numSamples = 2;
+let numSamples = 100;
 let currentSample = 0;
 let framesOfData = nj.zeros([5,4,6,numSamples]);
 
