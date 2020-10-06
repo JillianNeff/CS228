@@ -17,9 +17,9 @@ function Train(){
         features = features.reshape(120);
         knnClassifier.addExample(features.tolist(), 0);
 
-        let features1 = train1.pick(null, null, null, i);
+        let features1 = train2.pick(null, null, null, i);
         features1 = features1.reshape(120);
-        knnClassifier.addExample(features1.tolist(), 1);
+        knnClassifier.addExample(features1.tolist(), 2);
     }
     trainingCompleted = true;
 }
