@@ -4,6 +4,7 @@ let testingSampleIndex = 0;
 let controllerOptions = {};
 let previousNumHands = 0;
 let currentNumHands = 0;
+let framesOfData = nj.zeros([5,4,6]);
 //let predictedClassLabels = nj.zeros([train0.shape[3]]);
 
 
@@ -78,12 +79,12 @@ function HandleBone(bone, boneIndex, fingerIndex, InteractionBox) {
     zt = normalizedNextJoint[2];
 
     let sum = xb + xt + yb + yt + zb + zt;
-    /*framesOfData.set(fingerIndex, boneIndex, 0, currentSample, xb);
-    framesOfData.set(fingerIndex, boneIndex, 1, currentSample, yb);
-    framesOfData.set(fingerIndex, boneIndex, 2, currentSample, zb);
-    framesOfData.set(fingerIndex, boneIndex, 3, currentSample, xt);
-    framesOfData.set(fingerIndex, boneIndex, 4, currentSample, yt);
-    framesOfData.set(fingerIndex, boneIndex, 5, currentSample, zt);*/
+    framesOfData.set(fingerIndex, boneIndex, 0, xb);
+    framesOfData.set(fingerIndex, boneIndex, 1, yb);
+    framesOfData.set(fingerIndex, boneIndex, 2, zb);
+    framesOfData.set(fingerIndex, boneIndex, 3, xt);
+    framesOfData.set(fingerIndex, boneIndex, 4, yt);
+    framesOfData.set(fingerIndex, boneIndex, 5, zt);
 
     let canvasPrevX = window.innerWidth * normalizedPrevJoint[0];
     let canvasPrevY = window.innerHeight * (1 - normalizedPrevJoint[1]);
