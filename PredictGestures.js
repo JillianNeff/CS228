@@ -1,6 +1,5 @@
 let trainingCompleted = false;
 const knnClassifier = ml5.KNNClassifier();
-let testingSampleIndex = 0;
 let controllerOptions = {};
 let previousNumHands = 0;
 let currentNumHands = 0;
@@ -15,7 +14,8 @@ Leap.loop(controllerOptions, function(frame){
         Train();
     HandleFrame(frame);
     previousNumHands = currentNumHands;
-    Test();
+    //console.log(framesOfData);
+    //Test();
 });
 
 function Train(){
@@ -32,26 +32,24 @@ function Train(){
 }
 
 function Test(){
-    for( let i = 0; i < test.shape[3]; i++){
-        let features = test.pick(null,null,null,i);
-        features = features.reshape(120);
+    //for( let i = 0; i < test.shape[3]; i++){
+        //let features = test.pick(null,null,null,i);
+        let features = framesOfData.reshape(120);
         let predictedLabel = knnClassifier.classify(features.tolist(), GotResults);
-    }
+    //}
 }
 
 function GotResults(err, result){
     //predictedClassLabels.set(testingSampleIndex, parseInt(result.label));
-    console.log(testingSampleIndex, parseInt(result.label));
-    testingSampleIndex++;
-    if(testingSampleIndex >= train0.shape[3]){
-        testingSampleIndex = 0;
-    }
+    console.log(parseInt(result.label))
 }
 
 function HandleFrame(frame){
     if (frame.hands.length >= 1){
         let hand = frame.hands[0];
         let InteractionBox = frame.interactionBox;
+        Test();
+        //console.log(framesOfData.toString());
         HandleHand(hand,frame.hands.length, InteractionBox);
     }
 }
