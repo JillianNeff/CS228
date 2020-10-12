@@ -123,9 +123,15 @@ function HandleBone(bone, boneIndex, fingerIndex, InteractionBox) {
 }
 
 function CenterData(){
+    CenterXData();
+    CenterYData();
+    CenterZData();
+}
+
+function CenterXData(){
     let xValues = oneFrameOfData.slice([],[],[0,6,3]);
     let currentMean = xValues.mean();
-    console.log(currentMean);
+    //console.log(currentMean);
     let horizontalShift = 0.5 - currentMean;
     for( let r = 0; r < oneFrameOfData.shape[0]; ++r){
         for (let c = 0; c < oneFrameOfData.shape[1]; ++c){
@@ -139,8 +145,46 @@ function CenterData(){
         }
     }
     currentMean = xValues.mean();
-    console.log(currentMean);
+    //console.log(currentMean);
 }
 
+function CenterYData(){
+    let yValues = oneFrameOfData.slice([],[],[1,6,3]);
+    let currentMean = yValues.mean();
+    //console.log(currentMean);
+    let verticalShift = 0.5 - currentMean;
+    for( let r = 0; r < oneFrameOfData.shape[0]; ++r){
+        for (let c = 0; c < oneFrameOfData.shape[1]; ++c){
+            let currentY = oneFrameOfData.get(r, c, 1);
+            let shiftedY = currentY + verticalShift;
+            oneFrameOfData.set(r, c, 1, shiftedY);
 
+            currentY = oneFrameOfData.get(r, c, 4);
+            shiftedY = currentY + verticalShift;
+            oneFrameOfData.set(r, c, 4, shiftedY);
+        }
+    }
+    currentMean = yValues.mean();
+    //console.log(currentMean);
+}
+
+function CenterZData(){
+    let zValues = oneFrameOfData.slice([],[],[2,6,3]);
+    let currentMean = zValues.mean();
+    console.log(currentMean);
+    let verticalShift = 0.5 - currentMean;
+    for( let r = 0; r < oneFrameOfData.shape[0]; ++r){
+        for (let c = 0; c < oneFrameOfData.shape[1]; ++c){
+            let currentZ = oneFrameOfData.get(r, c, 2);
+            let shiftedZ = currentZ + verticalShift;
+            oneFrameOfData.set(r, c, 2, shiftedZ);
+
+            currentZ = oneFrameOfData.get(r, c, 5);
+            shiftedZ = currentZ + verticalShift;
+            oneFrameOfData.set(r, c, 5, shiftedZ);
+        }
+    }
+    currentMean = zValues.mean();
+    console.log(currentMean);
+}
 
