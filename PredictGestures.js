@@ -3,7 +3,7 @@ const knnClassifier = ml5.KNNClassifier();
 let controllerOptions = {};
 let previousNumHands = 0;
 let currentNumHands = 0;
-let framesOfData = nj.zeros([5,4,6]);
+let oneFrameOfData = nj.zeros([5,4,6]);
 let numPredictions = 0;
 let meanAccuracy = 0;
 let d = 2;
@@ -37,7 +37,8 @@ function Train(){
 function Test(){
     //for( let i = 0; i < test.shape[3]; i++){
         //let features = test.pick(null,null,null,i);
-        let features = framesOfData.reshape(120);
+        CenterData();
+        let features = oneFrameOfData.reshape(120);
         let predictedLabel = knnClassifier.classify(features.tolist(), GotResults);
     //}
 }
@@ -83,12 +84,12 @@ function HandleBone(bone, boneIndex, fingerIndex, InteractionBox) {
     zt = normalizedNextJoint[2];
 
     let sum = xb + xt + yb + yt + zb + zt;
-    framesOfData.set(fingerIndex, boneIndex, 0, xb);
-    framesOfData.set(fingerIndex, boneIndex, 1, yb);
-    framesOfData.set(fingerIndex, boneIndex, 2, zb);
-    framesOfData.set(fingerIndex, boneIndex, 3, xt);
-    framesOfData.set(fingerIndex, boneIndex, 4, yt);
-    framesOfData.set(fingerIndex, boneIndex, 5, zt);
+    oneFrameOfData.set(fingerIndex, boneIndex, 0, xb);
+    oneFrameOfData.set(fingerIndex, boneIndex, 1, yb);
+    oneFrameOfData.set(fingerIndex, boneIndex, 2, zb);
+    oneFrameOfData.set(fingerIndex, boneIndex, 3, xt);
+    oneFrameOfData.set(fingerIndex, boneIndex, 4, yt);
+    oneFrameOfData.set(fingerIndex, boneIndex, 5, zt);
 
     let canvasPrevX = window.innerWidth * normalizedPrevJoint[0];
     let canvasPrevY = window.innerHeight * (1 - normalizedPrevJoint[1]);
@@ -119,6 +120,26 @@ function HandleBone(bone, boneIndex, fingerIndex, InteractionBox) {
     }*/
     stroke(255 *(distance/6));
     line(canvasPrevX, canvasPrevY, canvasNextX, canvasNextY);
+}
+
+function CenterData(){
+    let xValues = oneFrameOfData.slice([],[],[0,6,3]);
+    let currentMean = xValues.mean();
+    console.log(currentMean);
+    let horizontalShift = 0.5 - currentMean;
+    for( let r = 0; r < oneFrameOfData.shape[0]; ++r){
+        for (let c = 0; c < oneFrameOfData.shape[1]; ++c){
+            let currentX = oneFrameOfData.get(r, c, 0);
+            let shiftedX = currentX + horizontalShift;
+            oneFrameOfData.set(r, c, 0, shiftedX);
+
+            currentX = oneFrameOfData.get(r, c, 3);
+            shiftedX = currentX + horizontalShift;
+            oneFrameOfData.set(r, c, 3, shiftedX);
+        }
+    }
+    currentMean = xValues.mean();
+    console.log(currentMean);
 }
 
 
