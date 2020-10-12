@@ -47,7 +47,7 @@ function GotResults(err, result){
     //console.log(parseInt(result.label))
     ++numPredictions;
     meanAccuracy = ((numPredictions - 1) * meanAccuracy + (parseInt(result.label) == d)) / numPredictions;
-    console.log(numPredictions, meanAccuracy, parseInt(result.label));
+    //console.log(numPredictions, meanAccuracy, parseInt(result.label));
 }
 
 function HandleFrame(frame){
