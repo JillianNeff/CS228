@@ -4,6 +4,9 @@ let controllerOptions = {};
 let previousNumHands = 0;
 let currentNumHands = 0;
 let framesOfData = nj.zeros([5,4,6]);
+let numPredictions = 0;
+let meanAccuracy = 0;
+let d = 2;
 //let predictedClassLabels = nj.zeros([train0.shape[3]]);
 
 
@@ -41,7 +44,10 @@ function Test(){
 
 function GotResults(err, result){
     //predictedClassLabels.set(testingSampleIndex, parseInt(result.label));
-    console.log(parseInt(result.label))
+    //console.log(parseInt(result.label))
+    ++numPredictions;
+    meanAccuracy = ((numPredictions - 1) * meanAccuracy + (parseInt(result.label) == d)) / numPredictions;
+    console.log(numPredictions, meanAccuracy, parseInt(result.label));
 }
 
 function HandleFrame(frame){
