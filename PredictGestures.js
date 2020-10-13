@@ -6,7 +6,7 @@ let currentNumHands = 0;
 let oneFrameOfData = nj.zeros([5,4,6]);
 let numPredictions = 0;
 let meanAccuracy = 0;
-let d = 2;
+let d = 9;
 //let predictedClassLabels = nj.zeros([train0.shape[3]]);
 
 
@@ -27,9 +27,41 @@ function Train(){
         features = features.reshape(120);
         knnClassifier.addExample(features.tolist(), 0);
 
-        let features1 = train2.pick(null, null, null, i);
-        features1 = features1.reshape(120);
-        knnClassifier.addExample(features1.tolist(), 2);
+        features = train1.pick(null, null, null, i);
+        features = features.reshape(120);
+        knnClassifier.addExample(features.tolist(), 1);
+
+        features = train2.pick(null, null, null, i);
+        features = features.reshape(120);
+        knnClassifier.addExample(features.tolist(), 2);
+
+        features = train3.pick(null, null, null, i);
+        features = features.reshape(120);
+        knnClassifier.addExample(features.tolist(), 3);
+
+        features = train4.pick(null, null, null, i);
+        features = features.reshape(120);
+        knnClassifier.addExample(features.tolist(), 4);
+
+        features = train5.pick(null, null, null, i);
+        features = features.reshape(120);
+        knnClassifier.addExample(features.tolist(), 5);
+
+        features = train6.pick(null, null, null, i);
+        features = features.reshape(120);
+        knnClassifier.addExample(features.tolist(), 6);
+
+        features = train7.pick(null, null, null, i);
+        features = features.reshape(120);
+        knnClassifier.addExample(features.tolist(), 7);
+
+        features = train8.pick(null, null, null, i);
+        features = features.reshape(120);
+        knnClassifier.addExample(features.tolist(), 8);
+
+        features = train8.pick(null, null, null, i);
+        features = features.reshape(120);
+        knnClassifier.addExample(features.tolist(), 9);
     }
     trainingCompleted = true;
 }
