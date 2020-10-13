@@ -48,7 +48,7 @@ function GotResults(err, result){
     //console.log(parseInt(result.label))
     ++numPredictions;
     meanAccuracy = ((numPredictions - 1) * meanAccuracy + (parseInt(result.label) == d)) / numPredictions;
-    //console.log(numPredictions, meanAccuracy, parseInt(result.label));
+    console.log(numPredictions, meanAccuracy, parseInt(result.label));
 }
 
 function HandleFrame(frame){
@@ -131,7 +131,6 @@ function CenterData(){
 function CenterXData(){
     let xValues = oneFrameOfData.slice([],[],[0,6,3]);
     let currentMean = xValues.mean();
-    //console.log(currentMean);
     let horizontalShift = 0.5 - currentMean;
     for( let r = 0; r < oneFrameOfData.shape[0]; ++r){
         for (let c = 0; c < oneFrameOfData.shape[1]; ++c){
@@ -145,13 +144,11 @@ function CenterXData(){
         }
     }
     currentMean = xValues.mean();
-    //console.log(currentMean);
 }
 
 function CenterYData(){
     let yValues = oneFrameOfData.slice([],[],[1,6,3]);
     let currentMean = yValues.mean();
-    //console.log(currentMean);
     let verticalShift = 0.5 - currentMean;
     for( let r = 0; r < oneFrameOfData.shape[0]; ++r){
         for (let c = 0; c < oneFrameOfData.shape[1]; ++c){
@@ -165,13 +162,11 @@ function CenterYData(){
         }
     }
     currentMean = yValues.mean();
-    //console.log(currentMean);
 }
 
 function CenterZData(){
     let zValues = oneFrameOfData.slice([],[],[2,6,3]);
     let currentMean = zValues.mean();
-    console.log(currentMean);
     let verticalShift = 0.5 - currentMean;
     for( let r = 0; r < oneFrameOfData.shape[0]; ++r){
         for (let c = 0; c < oneFrameOfData.shape[1]; ++c){
@@ -185,6 +180,5 @@ function CenterZData(){
         }
     }
     currentMean = zValues.mean();
-    console.log(currentMean);
 }
 
