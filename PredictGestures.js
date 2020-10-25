@@ -6,7 +6,7 @@ let currentNumHands = 0;
 let oneFrameOfData = nj.zeros([5,4,6]);
 let numPredictions = 0;
 let meanAccuracy = 0;
-let d = 9;
+let d = 7;
 //let predictedClassLabels = nj.zeros([train0.shape[3]]);
 
 
@@ -59,6 +59,18 @@ function Train(){
         features = features.reshape(120);
         knnClassifier.addExample(features.tolist(), 7);
 
+        features = train7Fisher.pick(null, null, null, i);
+        features = features.reshape(120);
+        knnClassifier.addExample(features.tolist(), 7);
+
+        features = train7Bongard.pick(null, null, null, i);
+        features = features.reshape(120);
+        knnClassifier.addExample(features.tolist(), 7);
+
+        features = train7Laquerre.pick(null, null, null, i);
+        features = features.reshape(120);
+        knnClassifier.addExample(features.tolist(), 7);
+
         features = train8.pick(null, null, null, i);
         features = features.reshape(120);
         knnClassifier.addExample(features.tolist(), 8);
@@ -84,7 +96,7 @@ function GotResults(err, result){
     //console.log(parseInt(result.label))
     ++numPredictions;
     meanAccuracy = ((numPredictions - 1) * meanAccuracy + (parseInt(result.label) == d)) / numPredictions;
-    console.log(parseInt(result.label));
+    console.log(meanAccuracy, parseInt(result.label));
 }
 
 function HandleFrame(frame){
