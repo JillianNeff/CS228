@@ -6,7 +6,7 @@ let currentNumHands = 0;
 let oneFrameOfData = nj.zeros([5,4,6]);
 let numPredictions = 0;
 let meanAccuracy = 0;
-let d = 7;
+let d = 8;
 //let predictedClassLabels = nj.zeros([train0.shape[3]]);
 
 
@@ -72,6 +72,10 @@ function Train(){
         knnClassifier.addExample(features.tolist(), 7);
 
         features = train8.pick(null, null, null, i);
+        features = features.reshape(120);
+        knnClassifier.addExample(features.tolist(), 8);
+
+        features = train8Bongard.pick(null, null, null, i);
         features = features.reshape(120);
         knnClassifier.addExample(features.tolist(), 8);
 
