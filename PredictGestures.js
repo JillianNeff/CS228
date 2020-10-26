@@ -6,28 +6,66 @@ let currentNumHands = 0;
 let oneFrameOfData = nj.zeros([5,4,6]);
 let numPredictions = 0;
 let meanAccuracy = 0;
-let d = 8;
+let d = 9;
+let programState = 0;
 //let predictedClassLabels = nj.zeros([train0.shape[3]]);
 
 
 Leap.loop(controllerOptions, function(frame){
-    currentNumHands = frame.hands.length;
     clear();
-    if(!trainingCompleted)
-        Train();
-    HandleFrame(frame);
+    DetermineState(frame);
+    if (programState == 0) {
+        HandleState0(frame);
+    }
+    else if (programState == 1) {
+        HandleState1(frame)
+    }
+    currentNumHands = frame.hands.length;
     previousNumHands = currentNumHands;
     //console.log(framesOfData);
-    //Test();
 });
 
-function Train(){
+function DetermineState(frame) {
+    if (frame.hands.length == 0)
+        programState = 0;
+    else
+        programState = 1;
+}
+
+function HandleState0(frame){
+    TrainKNNIfNotDoneYet();
+    DrawImageToHelpUserPutTheirHandOverTheDevice();
+}
+
+function HandleState1(frame){
+    HandleFrame(frame);
+    //Test();
+}
+
+function TrainKNNIfNotDoneYet(){
+    //if(!trainingCompleted)
+        // Train();
+}
+
+function DrawImageToHelpUserPutTheirHandOverTheDevice(){
+
+}
+
+/*function Train(){
     for(let i = 0; i < train0.shape[3]; i++){
         let features = train0.pick(null,null,null,i);
         features = features.reshape(120);
         knnClassifier.addExample(features.tolist(), 0);
 
+        /!*features = train0Bongard.pick(null,null,null,i);
+        features = features.reshape(120);
+        knnClassifier.addExample(features.tolist(), 0);*!/
+
         features = train1.pick(null, null, null, i);
+        features = features.reshape(120);
+        knnClassifier.addExample(features.tolist(), 1);
+
+        features = train1Bongard.pick(null, null, null, i);
         features = features.reshape(120);
         knnClassifier.addExample(features.tolist(), 1);
 
@@ -44,6 +82,14 @@ function Train(){
         knnClassifier.addExample(features.tolist(), 3);
 
         features = train4.pick(null, null, null, i);
+        features = features.reshape(120);
+        knnClassifier.addExample(features.tolist(), 4);
+
+        features = train4Bongard.pick(null, null, null, i);
+        features = features.reshape(120);
+        knnClassifier.addExample(features.tolist(), 4);
+
+        features = train4Kiely.pick(null, null, null, i);
         features = features.reshape(120);
         knnClassifier.addExample(features.tolist(), 4);
 
@@ -82,6 +128,14 @@ function Train(){
         features = train9.pick(null, null, null, i);
         features = features.reshape(120);
         knnClassifier.addExample(features.tolist(), 9);
+
+        features = train9Bongard.pick(null, null, null, i);
+        features = features.reshape(120);
+        knnClassifier.addExample(features.tolist(), 9);
+
+        features = train9Goldman.pick(null, null, null, i);
+        features = features.reshape(120);
+        knnClassifier.addExample(features.tolist(), 9);
     }
     trainingCompleted = true;
 }
@@ -93,21 +147,21 @@ function Test(){
         let features = oneFrameOfData.reshape(120);
         let predictedLabel = knnClassifier.classify(features.tolist(), GotResults);
     //}
-}
+}*/
 
 function GotResults(err, result){
     //predictedClassLabels.set(testingSampleIndex, parseInt(result.label));
     //console.log(parseInt(result.label))
     ++numPredictions;
     meanAccuracy = ((numPredictions - 1) * meanAccuracy + (parseInt(result.label) == d)) / numPredictions;
-    console.log(meanAccuracy, parseInt(result.label));
+    console.log((result.label));
 }
 
 function HandleFrame(frame){
     if (frame.hands.length >= 1){
         let hand = frame.hands[0];
         let InteractionBox = frame.interactionBox;
-        Test();
+        //Test();
         //console.log(framesOfData.toString());
         HandleHand(hand,frame.hands.length, InteractionBox);
     }
@@ -143,10 +197,10 @@ function HandleBone(bone, boneIndex, fingerIndex, InteractionBox) {
     oneFrameOfData.set(fingerIndex, boneIndex, 4, yt);
     oneFrameOfData.set(fingerIndex, boneIndex, 5, zt);
 
-    let canvasPrevX = window.innerWidth * normalizedPrevJoint[0];
-    let canvasPrevY = window.innerHeight * (1 - normalizedPrevJoint[1]);
-    let canvasNextX = window.innerWidth * normalizedNextJoint[0];
-    let canvasNextY = window.innerHeight * (1 - normalizedNextJoint[1]);
+    let canvasPrevX = window.innerWidth/2 * normalizedPrevJoint[0];
+    let canvasPrevY = window.innerHeight/2 * (1 - normalizedPrevJoint[1]);
+    let canvasNextX = window.innerWidth/2 * normalizedNextJoint[0];
+    let canvasNextY = window.innerHeight/2 * (1 - normalizedNextJoint[1]);
 
     //circle(x,window.innerHeight - y,50);
     let distance = 4 - boneIndex;
