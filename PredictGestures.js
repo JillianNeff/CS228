@@ -38,13 +38,22 @@ function DetermineState(frame) {
 }
 
 function HandIsUncentered(){
-    return HandIsTooFarToTheLeft();
+    return HandIsTooFarToTheLeft() || HandIsTooFarToTheRight();
 }
 
 function HandIsTooFarToTheLeft(){
     let xValues = oneFrameOfData.slice([],[],[0,6,3]);
     let currentMean = xValues.mean();
     if(currentMean < 0.25 )
+        return true;
+    else
+        return false;
+}
+
+function HandIsTooFarToTheRight(){
+    let xValues = oneFrameOfData.slice([],[],[0,6,3]);
+    let currentMean = xValues.mean();
+    if(currentMean > 0.75 )
         return true;
     else
         return false;
@@ -58,7 +67,10 @@ function HandleState0(frame){
 function HandleState1(frame){
     HandleFrame(frame);
     if( HandIsTooFarToTheLeft() ){
-        DrawArrowRight()
+        DrawArrowRight();
+    }
+    else if( HandIsTooFarToTheRight() ){
+        DrawArrowLeft();
     }
     //Test();
 }
@@ -69,6 +81,10 @@ function HandleState2(frame){
 }
 function DrawArrowRight(){
     image(imgRight, window.innerWidth/2, 0, window.innerWidth/2, window.innerHeight/2);
+}
+
+function DrawArrowLeft(){
+    image(imgLeft, window.innerWidth/2, 0, window.innerWidth/2, window.innerHeight/2);
 }
 
 function TrainKNNIfNotDoneYet(){
