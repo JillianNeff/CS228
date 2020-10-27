@@ -18,7 +18,10 @@ Leap.loop(controllerOptions, function(frame){
         HandleState0(frame);
     }
     else if (programState == 1) {
-        HandleState1(frame)
+        HandleState1(frame);
+    }
+    else if(programState == 2) {
+        HandleState2(frame);
     }
     currentNumHands = frame.hands.length;
     previousNumHands = currentNumHands;
@@ -60,6 +63,10 @@ function HandleState1(frame){
     //Test();
 }
 
+function HandleState2(frame){
+    HandleFrame(frame)
+    //Test();
+}
 function DrawArrowRight(){
     image(imgRight, window.innerWidth/2, 0, window.innerWidth/2, window.innerHeight/2);
 }
