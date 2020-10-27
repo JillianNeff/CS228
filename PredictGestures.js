@@ -38,7 +38,7 @@ function DetermineState(frame) {
 }
 
 function HandIsUncentered(){
-    return HandIsTooFarToTheLeft() || HandIsTooFarToTheRight();
+    return HandIsTooFarToTheLeft() || HandIsTooFarToTheRight() || HandIsTooHigh() || HandIsTooLow();
 }
 
 function HandIsTooFarToTheLeft(){
@@ -59,6 +59,24 @@ function HandIsTooFarToTheRight(){
         return false;
 }
 
+function HandIsTooLow(){
+    let yValues = oneFrameOfData.slice([],[],[1,6,3]);
+    let currentMean = yValues.mean();
+    if(currentMean < 0.25 )
+        return true;
+    else
+        return false;
+}
+
+function HandIsTooHigh(){
+    let yValues = oneFrameOfData.slice([],[],[1,6,3]);
+    let currentMean = yValues.mean();
+    if(currentMean > 0.75 )
+        return true;
+    else
+        return false;
+}
+
 function HandleState0(frame){
     TrainKNNIfNotDoneYet();
     DrawImageToHelpUserPutTheirHandOverTheDevice();
@@ -71,6 +89,12 @@ function HandleState1(frame){
     }
     else if( HandIsTooFarToTheRight() ){
         DrawArrowLeft();
+    }
+    else if( HandIsTooLow()){
+        DrawArrowUp();
+    }
+    else if( HandIsTooHigh()){
+        DrawArrowDown();
     }
     //Test();
 }
@@ -85,6 +109,14 @@ function DrawArrowRight(){
 
 function DrawArrowLeft(){
     image(imgLeft, window.innerWidth/2, 0, window.innerWidth/2, window.innerHeight/2);
+}
+
+function DrawArrowUp(){
+    image(imgUp, window.innerWidth/2, 0, window.innerWidth/2, window.innerHeight/2);
+}
+
+function DrawArrowDown(){
+    image(imgDown, window.innerWidth/2, 0, window.innerWidth/2, window.innerHeight/2);
 }
 
 function TrainKNNIfNotDoneYet(){
