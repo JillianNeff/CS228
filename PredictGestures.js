@@ -28,8 +28,23 @@ Leap.loop(controllerOptions, function(frame){
 function DetermineState(frame) {
     if (frame.hands.length == 0)
         programState = 0;
-    else
+    else if( HandIsUncentered())
         programState = 1;
+    else
+        programState = 2;
+}
+
+function HandIsUncentered(){
+    return HandIsTooFarToTheLeft();
+}
+
+function HandIsTooFarToTheLeft(){
+    let xValues = oneFrameOfData.slice([],[],[0,6,3]);
+    let currentMean = xValues.mean();
+    if(currentMean < 0.25 )
+        return true;
+    else
+        return false;
 }
 
 function HandleState0(frame){
@@ -39,7 +54,14 @@ function HandleState0(frame){
 
 function HandleState1(frame){
     HandleFrame(frame);
+    if( HandIsTooFarToTheLeft() ){
+        DrawArrowRight()
+    }
     //Test();
+}
+
+function DrawArrowRight(){
+    image(imgRight, window.innerWidth/2, 0, window.innerWidth/2, window.innerHeight/2);
 }
 
 function TrainKNNIfNotDoneYet(){
