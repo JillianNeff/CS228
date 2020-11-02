@@ -34,7 +34,12 @@ function SignIn(){
     if (IsNewUser(username, list)) {
         let item = document.createElement('li');
         item.innerHTML = String(username);
+        item.id = String(username) + "_name";
         list.appendChild(item);
+        let item2 = document.createElement('li');
+        item2.innerHTML = String(1);
+        item2.id = String(username) + "_signins";
+        list.appendChild(item2);
     }
     console.log(list);
     return false;
