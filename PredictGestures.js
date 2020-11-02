@@ -28,6 +28,11 @@ Leap.loop(controllerOptions, function(frame){
     //console.log(framesOfData);
 });
 
+function SignIn(){
+    let username = document.getElementById('username').value;
+    console.log(username);
+}
+
 function DetermineState(frame) {
     if (frame.hands.length == 0)
         programState = 0;
