@@ -35,6 +35,11 @@ function SignIn(){
         CreateNewUser(username, list);
         CreateSignInItem(username, list);
     }
+    else {
+        let ID = String(username) + "_signins";
+        let listItem = document.getElementById(ID);
+        listItem.innerHTML = parseInt(listItem.innerHTML) + 1;
+    }
     console.log(list);
     return false;
 }
@@ -45,7 +50,6 @@ function IsNewUser(username, list){
     for (let i=0; i< users.length; ++i){
         if (username == users[i].innerHTML)
             usernameFound = true
-        console.log(users[i], users[i].innerHTML)
     }
     return usernameFound == false;
 }
@@ -59,7 +63,7 @@ function CreateNewUser(username, list){
 
 function CreateSignInItem(username, list){
     let item = document.createElement('li');
-    item.innerHTML = String(1);
+    item.innerHTML = 1;
     item.id = String(username) + "_signins";
     list.appendChild(item);
 }
