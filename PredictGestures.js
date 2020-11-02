@@ -31,11 +31,24 @@ Leap.loop(controllerOptions, function(frame){
 function SignIn(){
     let username = document.getElementById('username').value;
     let list = document.getElementById('users');
-    let item = document.createElement('li');
-    item.innerHTML = String(username);
-    list.appendChild(item);
-    console.log(list.innerHTML);
+    if (IsNewUser(username, list)) {
+        let item = document.createElement('li');
+        item.innerHTML = String(username);
+        list.appendChild(item);
+    }
+    console.log(list);
     return false;
+}
+
+function IsNewUser(username, list){
+    let users = list.children;
+    let usernameFound = false;
+    for (let i=0; i< users.length; ++i){
+        if (username == users[i].innerHTML)
+            usernameFound = true
+        console.log(users[i], users[i].innerHTML)
+    }
+    return usernameFound == false
 }
 
 function DetermineState(frame) {
