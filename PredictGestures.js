@@ -32,14 +32,8 @@ function SignIn(){
     let username = document.getElementById('username').value;
     let list = document.getElementById('users');
     if (IsNewUser(username, list)) {
-        let item = document.createElement('li');
-        item.innerHTML = String(username);
-        item.id = String(username) + "_name";
-        list.appendChild(item);
-        let item2 = document.createElement('li');
-        item2.innerHTML = String(1);
-        item2.id = String(username) + "_signins";
-        list.appendChild(item2);
+        CreateNewUser(username, list);
+        CreateSignInItem(username, list);
     }
     console.log(list);
     return false;
@@ -53,7 +47,21 @@ function IsNewUser(username, list){
             usernameFound = true
         console.log(users[i], users[i].innerHTML)
     }
-    return usernameFound == false
+    return usernameFound == false;
+}
+
+function CreateNewUser(username, list){
+    let item = document.createElement('li');
+    item.innerHTML = String(username);
+    item.id = String(username) + "_name";
+    list.appendChild(item);
+}
+
+function CreateSignInItem(username, list){
+    let item = document.createElement('li');
+    item.innerHTML = String(1);
+    item.id = String(username) + "_signins";
+    list.appendChild(item);
 }
 
 function DetermineState(frame) {
