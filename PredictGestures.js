@@ -169,6 +169,7 @@ function HandleState1(frame){
 // Called when a hand is centered over the device
 function HandleState2(frame){
     HandleFrame(frame);
+    DetermineWhetherToSwitchDigits();
     DrawLowerRightPanel();
     //Test();
 }
@@ -212,6 +213,13 @@ function DrawLowerRightPanel(){
     else {
         image(img2, window.innerWidth/2, window.innerHeight/2, window.innerWidth/2, window.innerHeight/2);
     }
+}
+
+function DetermineWhetherToSwitchDigits(){
+    if(digitToShow == 0)
+        digitToShow = 2;
+    else
+        digitToShow = 0;
 }
 
 /*function Train(){
