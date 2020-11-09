@@ -9,6 +9,7 @@ let meanAccuracy = 0;
 let d = 9;
 let programState = 0;
 let digitToShow = 0;
+let timeSinceLastDigitChange = new Date();
 //let predictedClassLabels = nj.zeros([train0.shape[3]]);
 
 
@@ -168,9 +169,9 @@ function HandleState1(frame){
 
 // Called when a hand is centered over the device
 function HandleState2(frame){
-    HandleFrame(frame);
     DetermineWhetherToSwitchDigits();
     DrawLowerRightPanel();
+    HandleFrame(frame);
     //Test();
 }
 function DrawArrowRight(){
@@ -216,6 +217,24 @@ function DrawLowerRightPanel(){
 }
 
 function DetermineWhetherToSwitchDigits(){
+    if(TimeToSwitchDigits()){
+        SwitchDigits();
+    }
+}
+
+function TimeToSwitchDigits(){
+    let currentTime = new Date();
+    let differenceInMilliseconds= currentTime - timeSinceLastDigitChange;
+    let differenceInSeconds = differenceInMilliseconds/ 1000;
+    if(differenceInSeconds > 1) {
+        return true;
+    }
+    else
+        return false;
+}
+
+function SwitchDigits(){
+    timeSinceLastDigitChange = new Date()
     if(digitToShow == 0)
         digitToShow = 2;
     else
