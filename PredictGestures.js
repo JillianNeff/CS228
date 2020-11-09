@@ -170,6 +170,7 @@ function HandleState1(frame){
 // Called when a hand is centered over the device
 function HandleState2(frame){
     DetermineWhetherToSwitchDigits();
+    DrawCorrectness();
     DrawLowerRightPanel();
     HandleFrame(frame);
     Test();
@@ -214,6 +215,19 @@ function DrawLowerRightPanel(){
     else {
         image(img2, window.innerWidth/2, window.innerHeight/2, window.innerWidth/2, window.innerHeight/2);
     }
+}
+
+function DrawCorrectness(){
+    //rect(window.innerWidth/2, 0, 10, window.innerHeight/2)
+    for( let y = 0; y < window.innerHeight/2 - 20; y++){
+        let inter = map(y, 0, window.innerHeight/2 - 20, 0, 1);
+        let c = lerpColor(color(0,255,0), color(255,0,0), inter);
+        stroke(c);
+        line(window.innerWidth/2, y, window.innerWidth/2 + 10, y);
+    }
+    stroke(color(0,0,0));
+    strokeWeight(4);
+    line(window.innerWidth/2 -10,(window.innerHeight/2 - 20)*(1-meanAccuracy), window.innerWidth/2 + 20,(window.innerHeight/2 - 20)*(1-meanAccuracy));
 }
 
 function DetermineWhetherToSwitchDigits(){
