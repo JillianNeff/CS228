@@ -172,7 +172,7 @@ function HandleState2(frame){
     DetermineWhetherToSwitchDigits();
     DrawLowerRightPanel();
     HandleFrame(frame);
-    //Test();
+    Test();
 }
 function DrawArrowRight(){
     image(imgRight, window.innerWidth/2, 0, window.innerWidth/2, window.innerHeight/2);
@@ -199,8 +199,8 @@ function DrawArrowBack(){
 }
 
 function TrainKNNIfNotDoneYet(){
-    //if(!trainingCompleted)
-        // Train();
+    if(!trainingCompleted)
+         Train();
 }
 
 function DrawImageToHelpUserPutTheirHandOverTheDevice(){
@@ -226,7 +226,7 @@ function TimeToSwitchDigits(){
     let currentTime = new Date();
     let differenceInMilliseconds= currentTime - timeSinceLastDigitChange;
     let differenceInSeconds = differenceInMilliseconds/ 1000;
-    if(differenceInSeconds > 1) {
+    if(differenceInSeconds > 6) {
         return true;
     }
     else
@@ -241,15 +241,15 @@ function SwitchDigits(){
         digitToShow = 0;
 }
 
-/*function Train(){
+function Train(){
     for(let i = 0; i < train0.shape[3]; i++){
         let features = train0.pick(null,null,null,i);
         features = features.reshape(120);
         knnClassifier.addExample(features.tolist(), 0);
 
-        /!*features = train0Bongard.pick(null,null,null,i);
+        /*features = train0Bongard.pick(null,null,null,i);
         features = features.reshape(120);
-        knnClassifier.addExample(features.tolist(), 0);*!/
+        knnClassifier.addExample(features.tolist(), 0);*/
 
         features = train1.pick(null, null, null, i);
         features = features.reshape(120);
@@ -337,14 +337,13 @@ function Test(){
         let features = oneFrameOfData.reshape(120);
         let predictedLabel = knnClassifier.classify(features.tolist(), GotResults);
     //}
-}*/
+}
 
 function GotResults(err, result){
     //predictedClassLabels.set(testingSampleIndex, parseInt(result.label));
-    //console.log(parseInt(result.label))
     ++numPredictions;
-    meanAccuracy = ((numPredictions - 1) * meanAccuracy + (parseInt(result.label) == d)) / numPredictions;
-    console.log((result.label));
+    //meanAccuracy = ((numPredictions - 1) * meanAccuracy + (parseInt(result.label) == d)) / numPredictions;
+    console.log(parseInt(result.label));
 }
 
 function HandleFrame(frame){
