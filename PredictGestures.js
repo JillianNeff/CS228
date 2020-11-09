@@ -8,6 +8,7 @@ let numPredictions = 0;
 let meanAccuracy = 0;
 let d = 9;
 let programState = 0;
+let digitToShow = 0;
 //let predictedClassLabels = nj.zeros([train0.shape[3]]);
 
 
@@ -41,6 +42,7 @@ function SignIn(){
         listItem.innerHTML = parseInt(listItem.innerHTML) + 1;
     }
     console.log(list);
+    console.log(list.innerHTML);
     return false;
 }
 
@@ -164,8 +166,10 @@ function HandleState1(frame){
     //Test();
 }
 
+// Called when a hand is centered over the device
 function HandleState2(frame){
-    HandleFrame(frame)
+    HandleFrame(frame);
+    DrawLowerRightPanel();
     //Test();
 }
 function DrawArrowRight(){
@@ -199,6 +203,15 @@ function TrainKNNIfNotDoneYet(){
 
 function DrawImageToHelpUserPutTheirHandOverTheDevice(){
     image(img, 0, 0, window.innerWidth/2, window.innerHeight/2)
+}
+
+function DrawLowerRightPanel(){
+    if(digitToShow == 0) {
+        image(img0, window.innerWidth/2, window.innerHeight/2, window.innerWidth/2, window.innerHeight/2);
+    }
+    else {
+        image(img2, window.innerWidth/2, window.innerHeight/2, window.innerWidth/2, window.innerHeight/2);
+    }
 }
 
 /*function Train(){

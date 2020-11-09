@@ -1,4 +1,4 @@
-let img, imgUp, imgDown, imgLeft, imgRight, imgForwards, imgBackwards;
+let img, imgUp, imgDown, imgLeft, imgRight, imgForwards, imgBackwards, img0, img2;
 
 function setup() {
     createCanvas(window.innerWidth, window.innerHeight);
@@ -9,4 +9,6 @@ function setup() {
     imgRight = loadImage('https://i.imgur.com/L0Pe83X.jpg');
     imgForwards = loadImage('https://i.imgur.com/bZbJq6Q.jpg');
     imgBackwards = loadImage('https://i.imgur.com/1PVqPfU.jpg');
+    img0 = loadImage('https://i.imgur.com/3ledzwe.png');
+    img2 = loadImage('https://i.imgur.com/QbLhdG2.png');
 }
