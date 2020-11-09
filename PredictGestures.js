@@ -235,6 +235,7 @@ function TimeToSwitchDigits(){
 
 function SwitchDigits(){
     timeSinceLastDigitChange = new Date()
+    numPredictions = 0;
     if(digitToShow == 0)
         digitToShow = 2;
     else
@@ -342,8 +343,8 @@ function Test(){
 function GotResults(err, result){
     //predictedClassLabels.set(testingSampleIndex, parseInt(result.label));
     ++numPredictions;
-    //meanAccuracy = ((numPredictions - 1) * meanAccuracy + (parseInt(result.label) == d)) / numPredictions;
-    console.log(parseInt(result.label));
+    meanAccuracy = ((numPredictions - 1) * meanAccuracy + (parseInt(result.label) == digitToShow)) / numPredictions;
+    console.log(parseInt(result.label), meanAccuracy);
 }
 
 function HandleFrame(frame){
